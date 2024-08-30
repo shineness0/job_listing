@@ -37,18 +37,16 @@ const handleSubmit = async () => {
     location: form.location,
     description: form.description,
     salary: form.salary,
-    company: {
-      name: form.company.name,
-      description: form.company.description,
-      contactEmail: form.company.contactEmail,
-      contactPhone: form.company.contactPhone,
-    },
+    company_name: form.company.name,
+    company_description: form.company.description,
+    company_email: form.company.contactEmail,
+    company_phone: form.company.contactPhone,
   };
 
   try {
-    const response = await axios.put(`/api/jobs/${jobId}`, updatedJob);
+    const response = await axios.put(`http://127.0.0.1:8000/api/jobs/${jobId}`, updatedJob);
     toast.success('Job Updated Successfully');
-    router.push(`/jobs/${response.data.id}`);
+    router.push(`/jobs/${response.data.data.id}`);
   } catch (error) {
     console.error('Error fetching job', error);
     toast.error('Job Was Not Added');
@@ -57,18 +55,19 @@ const handleSubmit = async () => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`/api/jobs/${jobId}`);
-    state.job = response.data;
+    const response = await axios.get(`http://127.0.0.1:8000/api/jobs/${jobId}`);
+
+    state.job = response.data.data;
     // Populate inputs
     form.type = state.job.type;
     form.title = state.job.title;
     form.description = state.job.description;
     form.salary = state.job.salary;
     form.location = state.job.location;
-    form.company.name = state.job.company.name;
-    form.company.description = state.job.company.description;
-    form.company.contactEmail = state.job.company.contactEmail;
-    form.company.contactPhone = state.job.company.contactPhone;
+    form.company.name = state.job.company_name;
+    form.company.description = state.job.company_description;
+    form.company.contactEmail = state.job.company_contactEmail;
+    form.company.contactPhone = state.job.company_contactPhone;
   } catch (error) {
     console.error('Error fetching job', error);
   } finally {

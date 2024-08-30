@@ -74,7 +74,7 @@ public function update(Request $request, Job $job) {
         'type' => 'required|string',
         'location' => 'required',
         'description' => 'required',
-        'salary'=> 'required|integer',
+        'salary'=> 'required',
         'company_name' => 'required',
         'company_description' => 'required',
         'company_email' => 'required',
